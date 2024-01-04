@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:58:15 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/03 23:03:15 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/04 02:40:43 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,45 @@ char	*ft_strjoin(char const *s1, char const *s2)
 }
 
 
+
 char	*get_next_line(int fd)
 {
 	char	buffer[BUFFER_SIZE];
-	// size_t	bites_read;
 	char	*output;
-	
-	read(fd, buffer, BUFFER_SIZE);
-	output = ft_strjoin(output, buffer);
+	size_t	i;
+	int		nl_found;
 
-	printf("%s", output);
+	nl_found = 0;
+	output = NULL;
+	while (read(fd, buffer, BUFFER_SIZE))
+	{
+		i = 0;
+		output = ft_strjoin(output, buffer);
+		while (output[i])
+		{
+			if (output[i] == '\n')
+				nl_found = 1;
+			i++;
+		}
+		if (nl_found)
+			break ;
+	}
 	
+	printf("\n the output is: %s\n", output);
 	return ("hola");
 }
 
 int main()
 {
-	// int	fd;
+	int	fd;
 
-	// // fd = open("lorem.txt");
-	// if (fd == -1)
-	// {
-	// 	printf("Error al leer el archivo");
-	// 	return (-1);
-	// }
+	fd = open("lorem.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Error al leer el archivo");
+		return (-1);
+	}
 	
-	get_next_line(0);
+	get_next_line(fd);
 	return 0;
 }
