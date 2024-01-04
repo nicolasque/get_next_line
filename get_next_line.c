@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:58:15 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/04 02:40:43 by nico             ###   ########.fr       */
+/*   Updated: 2024/01/04 02:49:31 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,20 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (exit);
 }
 
+char	*ft_strrchr(const char *str, unsigned char c)
+{
+	int	i;
+
+	i = ft_strlen(str);
+	str += i;
+	while (i-- >= 0)
+	{
+		if (*str == c)
+			return ((char *)str);
+		str --;
+	}
+	return (NULL);
+}
 
 
 char	*get_next_line(int fd)
@@ -67,6 +81,11 @@ char	*get_next_line(int fd)
 		if (nl_found)
 			break ;
 	}
+	
+	//TODO remove the las part of the string after the \n
+	// podrias usar strrchr para encontar y usar strtrim para remover el resto 
+	// TODO usar alguna fucnion para encontrar el /n y quitar lineas
+
 	
 	printf("\n the output is: %s\n", output);
 	return ("hola");
