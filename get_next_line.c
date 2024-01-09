@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:58:15 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/09 19:03:31 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/09 19:28:47 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,20 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (exit);
 }
 
-int	ft_is_nl(char *str)
+int	ft_count_nl(char *str)
 {
-	int	i;
+	size_t	i;
+	size_t	nl_count;
 
 	i = 0;
+	nl_count = 0;
 	while (str[i])
 	{
 		if (str[i] == '\n')
-			return (1);
+			nl_count ++;
 		i++;
 	}
-	return (0);
+	return (nl_count);
 }
 
 int	ft_is_end(char *str)
@@ -65,10 +67,10 @@ int	ft_is_end(char *str)
 	while (str[i])
 	{
 		if (str[i] == '\0')
-			return (1);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int	ft_countfrom_nl(char *str)
@@ -123,7 +125,6 @@ void	ft_bzero(void *s, size_t n)
 {
 	ft_memset(s, 0, n);
 }
-
 
 void	*ft_calloc(size_t nitems, size_t size)
 {
@@ -225,33 +226,33 @@ char	*get_next_line(int fd)
 	if (fd < 0)
 		return (NULL);
 	output = ft_calloc(1,1);
-	while (!ft_is_nl(output) && !ft_is_end(output))
+	line_count++;
+	while ((ft_count_nl(output) < line_count))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1) {
 			free(output);
 			return NULL;
 		}
-		buffer[bytes_read] = '\0'; // Ensure null termination
 		output = ft_strjoin(output, buffer);
 	}
-	line_count++;
-	return (ft_split(output, '\n')[line_count]);
-	// return (output);
+	printf("%s", output);
+	// return (ft_split(output, '\n')[line_count]);
+	return (output);
 }
 
-// int	main()
-// {
-// 	int	fd;
+int	main()
+{
+	int	fd;
 
-// 	fd = open("lorem.txt", O_RDONLY);
-// 	if (fd == -1)
-// 	{
-// 		printf("Error al leer el archivo");
-// 		return (-1);
-// 	}
-// 	printf("%s",get_next_line(fd));
-// 	printf("%s",get_next_line(fd));
-// 	printf("%s",get_next_line(fd));
-// 	return 0;
-// }
+	fd = open("lorem.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Error al leer el archivo");
+		return (-1);
+	}
+	printf("%s",get_next_line(fd));
+	printf("%s",get_next_line(fd));
+	// printf("%s",get_next_line(fd));
+	return 0;
+}
