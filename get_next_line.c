@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:58:15 by nquecedo          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/01/09 18:56:06 by nquecedo         ###   ########.fr       */
+=======
+/*   Updated: 2024/01/04 02:49:31 by nico             ###   ########.fr       */
+>>>>>>> fcde580fa999371ac1eef364d9809223f5c99063
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +47,27 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (exit);
 }
 
+<<<<<<< HEAD
 int	ft_is_nl(char *str)
 {
 	int	i;
+=======
+char	*ft_strrchr(const char *str, unsigned char c)
+{
+	int	i;
+
+	i = ft_strlen(str);
+	str += i;
+	while (i-- >= 0)
+	{
+		if (*str == c)
+			return ((char *)str);
+		str --;
+	}
+	return (NULL);
+}
+
+>>>>>>> fcde580fa999371ac1eef364d9809223f5c99063
 
 	i = 0;
 	while (str[i])
@@ -59,6 +81,7 @@ int	ft_is_nl(char *str)
 
 int	ft_is_end(char *str)
 {
+<<<<<<< HEAD
 	int	i;
 
 	i = 0;
@@ -69,6 +92,36 @@ int	ft_is_end(char *str)
 		i++;
 	}
 	return (0);
+=======
+	char	buffer[BUFFER_SIZE];
+	char	*output;
+	size_t	i;
+	int		nl_found;
+
+	nl_found = 0;
+	output = NULL;
+	while (read(fd, buffer, BUFFER_SIZE))
+	{
+		i = 0;
+		output = ft_strjoin(output, buffer);
+		while (output[i])
+		{
+			if (output[i] == '\n')
+				nl_found = 1;
+			i++;
+		}
+		if (nl_found)
+			break ;
+	}
+	
+	//TODO remove the las part of the string after the \n
+	// podrias usar strrchr para encontar y usar strtrim para remover el resto 
+	// TODO usar alguna fucnion para encontrar el /n y quitar lineas
+
+	
+	printf("\n the output is: %s\n", output);
+	return ("hola");
+>>>>>>> fcde580fa999371ac1eef364d9809223f5c99063
 }
 
 int	ft_countfrom_nl(char *str)
@@ -127,6 +180,7 @@ void	ft_bzero(void *s, size_t n)
 
 void	*ft_calloc(size_t nitems, size_t size)
 {
+<<<<<<< HEAD
 	void	*exit;
 
 	exit = malloc(nitems * size);
@@ -238,6 +292,19 @@ char	*get_next_line(int fd)
 	line_count++;
 	return (ft_split(output, '\n')[line_count]);
 	// return (output);
+=======
+	int	fd;
+
+	fd = open("lorem.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Error al leer el archivo");
+		return (-1);
+	}
+	
+	get_next_line(fd);
+	return 0;
+>>>>>>> fcde580fa999371ac1eef364d9809223f5c99063
 }
 
 // int	main()
