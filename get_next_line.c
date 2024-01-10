@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:58:15 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/10 19:00:19 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/10 20:51:32 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,19 @@ int	ft_is_nl(char *str)
 	return (0);
 }
 
+char	*ft_strchr(const char *str, unsigned char c)
+{
+	while (*str != '\0')
+	{
+		if (*str == c)
+			return ((char *)str);
+		str++;
+	}
+	if (c == '\0')
+		return ((char *)str);
+	return (NULL);
+}
+
 char	*ft_read_line(int fd, char *buffer)
 {
 	char	*line;
@@ -82,6 +95,11 @@ char	*ft_read_line(int fd, char *buffer)
 	while (!ft_is_nl(line) && bites_read == BUFFER_SIZE)
 	{
 		bites_read = read(fd, buffer, BUFFER_SIZE);
+		if (bites_read == -1)
+		{
+			free(line);
+			return (NULL);
+		}
 		buffer[BUFFER_SIZE] = '\0';
 		temp = ft_strjoin(line, buffer);
 		free(line);
@@ -90,12 +108,11 @@ char	*ft_read_line(int fd, char *buffer)
 	return (line);
 }
 
-
 char	*get_next_line(int fd)
 {
 	static char		buffer[BUFFER_SIZE + 1];
 	char			*line;
-	char			*new_line;
+	// char			*new_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -115,7 +132,9 @@ int main()
 		printf("Error al leer el archivo");
 		return (-1);
 	}
-
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
+	printf("\nEl tamaño del buffer que etsoy usando es de: %i\n", BUFFER_SIZE);
+	printf("Otra llamada:\n%s __FIN\n\n", get_next_line(fd));
+	printf("Otra llamada:\n%s __FIN\n\n", get_next_line(fd));
+	printf("Otra llamada:\n%s __FIN\n\n", get_next_line(fd));
+	
 }
