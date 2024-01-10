@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:58:15 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/10 20:51:32 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/10 21:54:18 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,12 @@ char	*ft_read_line(int fd, char *buffer)
 
 	line = ft_strdup("");
 	bites_read = BUFFER_SIZE;
+	//Algo por aqui creo que puede estar bien pero hay que cambiar
+	if (ft_strchr(buffer, '\n') != NULL)
+	{
+		line = ft_strchr(buffer, '\n');
+		line = ft_strjoin(line, buffer);
+	}
 	while (!ft_is_nl(line) && bites_read == BUFFER_SIZE)
 	{
 		bites_read = read(fd, buffer, BUFFER_SIZE);
@@ -133,6 +139,7 @@ int main()
 		return (-1);
 	}
 	printf("\nEl tamaño del buffer que etsoy usando es de: %i\n", BUFFER_SIZE);
+	printf("Otra llamada:\n%s __FIN\n\n", get_next_line(fd));
 	printf("Otra llamada:\n%s __FIN\n\n", get_next_line(fd));
 	printf("Otra llamada:\n%s __FIN\n\n", get_next_line(fd));
 	printf("Otra llamada:\n%s __FIN\n\n", get_next_line(fd));
