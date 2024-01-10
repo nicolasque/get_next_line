@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:59:24 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/10 12:00:27 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/10 19:09:49 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 12
+# define BUFFER_SIZE 42
 # endif // BUFFER_SIZE
 
 char	*get_next_line(int fd);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   old_get_next_line.c                                :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:24:26 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/10 12:24:41 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/10 18:54:04 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,14 +220,14 @@ char	*get_next_line(int fd)
 	static char		buffer[BUFFER_SIZE + 1];
 	static char		*output;
 	static int	line_count = -1;
-	ssize_t		bytes_read;
+	ssize_t		bytes_read = BUFFER_SIZE;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!output)
 		output = ft_calloc(1,1);
 	line_count++;
-	while ((ft_count_nl(output) <= line_count))
+	while ((ft_count_nl(output) <= line_count) && bytes_read == BUFFER_SIZE)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		buffer[BUFFER_SIZE] = '\0';
@@ -242,21 +242,34 @@ char	*get_next_line(int fd)
 	// return (output);
 }
 
-// int	main()
-// {
-// 	int	fd;
+int	main()
+{
+	int	fd;
 
-// 	fd = open("lorem.txt", O_RDONLY);
-// 	if (fd == -1)
-// 	{
-// 		printf("Error al leer el archivo");
-// 		return (-1);
-// 	}
-// 	// get_next_line(fd);
-// 	// get_next_line(fd);
+	fd = open("lorem.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Error al leer el archivo");
+		return (-1);
+	}
+	// get_next_line(fd);
+	// get_next_line(fd);
 	
-// 	printf("%s\n",get_next_line(fd));
-// 	printf("%s\n",get_next_line(fd));
-// 	// printf("%s",get_next_line(fd));
-// 	return 0;
-// }
+	printf("%s\n",get_next_line(fd));
+	printf("%s\n",get_next_line(fd));
+	printf("%s\n",get_next_line(fd));
+	printf("%s\n",get_next_line(fd));
+	printf("%s\n",get_next_line(fd));
+	printf("%s\n",get_next_line(fd));
+	printf("%s\n",get_next_line(fd));
+	printf("%s\n",get_next_line(fd));
+	printf("%s\n",get_next_line(fd));
+	printf("%s\n",get_next_line(fd));
+	printf("%s\n",get_next_line(fd));
+	printf("%s\n",get_next_line(fd));
+	printf("%s\n",get_next_line(fd));
+	printf("%s\n",get_next_line(fd));
+	printf("%s\n",get_next_line(fd));
+
+	return 0;
+}
