@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:58:15 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/10 21:54:18 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:11:01 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,45 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		exit[i++] = *s2++;
 	exit[i] = '\0';
 	return (exit);
+}
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+{
+	size_t	i;
+
+	i = 0;
+	while (size > 1 && src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i ++;
+		size--;
+	}
+	if (size != 0)
+		dest[i] = '\0';
+	return (ft_strlen(src));
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*output;
+
+	if (s == NULL)
+		return (NULL);
+		
+	if (len > (ft_strlen(s) - start))
+		len = ft_strlen(s) - start;
+		
+	if (ft_strlen(s) < start)
+		{
+			output = malloc(1);
+			output[0] = '\0';
+			return (output);
+		}
+	output = malloc(len * sizeof(char) + 1);
+	if (output == NULL)
+		return (NULL);
+		
+	ft_strlcpy(output, s + start, len + 1);
+	return (output);
 }
 
 char	*ft_strdup(const char *str)
@@ -84,6 +123,8 @@ char	*ft_strchr(const char *str, unsigned char c)
 	return (NULL);
 }
 
+
+
 char	*ft_read_line(int fd, char *buffer)
 {
 	char	*line;
@@ -95,8 +136,8 @@ char	*ft_read_line(int fd, char *buffer)
 	//Algo por aqui creo que puede estar bien pero hay que cambiar
 	if (ft_strchr(buffer, '\n') != NULL)
 	{
-		line = ft_strchr(buffer, '\n');
-		line = ft_strjoin(line, buffer);
+		line = ft_strjoin(line, ft_strchr(buffer, '\n'));
+		
 	}
 	while (!ft_is_nl(line) && bites_read == BUFFER_SIZE)
 	{
@@ -114,18 +155,40 @@ char	*ft_read_line(int fd, char *buffer)
 	return (line);
 }
 
+
+
+
+char *proces_line(char *str)
+{
+	char	*newline_pos;
+	size_t	len;
+
+	newline_pos = ft_strchr(str, '\n');
+	if (newline_pos != NULL)
+	{
+		len = newline_pos - str;
+		return ft_substr(str, 0, len);
+	}
+	else
+		return (ft_substr(str, 0 , ft_strlen(str)));
+}
+
 char	*get_next_line(int fd)
 {
 	static char		buffer[BUFFER_SIZE + 1];
 	char			*line;
-	// char			*new_line;
+	char			*new_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	line = ft_read_line(fd, buffer);
+	//Si cambio line la tendre que liverar
 	if (!line)
 		return (NULL);
-	return (line);
+	new_line =  proces_line(line);
+	free(line);
+	printf("Buffer: %s\n", buffer);
+	return (new_line);
 }
 
 int main()
@@ -143,5 +206,4 @@ int main()
 	printf("Otra llamada:\n%s __FIN\n\n", get_next_line(fd));
 	printf("Otra llamada:\n%s __FIN\n\n", get_next_line(fd));
 	printf("Otra llamada:\n%s __FIN\n\n", get_next_line(fd));
-	
 }
