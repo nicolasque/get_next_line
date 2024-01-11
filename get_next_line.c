@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:58:15 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/11 19:39:21 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/11 19:47:13 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,14 +164,11 @@ char	*ft_read_line(int fd, char *buffer)
 		line = ft_strjoin(line, ft_strchr(buffer, '\n') + 1);
 		buffer = (ft_strrchr(buffer, '\n') + 1);
 	}
-	while (!ft_is_nl(line) && bites_read == BUFFER_SIZE)
+	while (!ft_is_nl(line) && bites_read == BUFFER_SIZE && line)
 	{
 		bites_read = read(fd, buffer, BUFFER_SIZE);
 		if (bites_read == -1)
-		{
 			free(line);
-			return (NULL);
-		}
 		buffer[BUFFER_SIZE] = '\0';
 		temp = ft_strjoin(line, buffer);
 		free(line);
