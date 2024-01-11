@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:58:15 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/11 18:11:01 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/11 19:39:21 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,18 @@ int	ft_is_nl(char *str)
 	return (0);
 }
 
+void	*ft_memset(void *str, int c, size_t n)
+{
+	unsigned char	new_c;
+	unsigned char	*char_str;
+
+	char_str = (unsigned char *)str;
+	new_c = c;
+	while (n--)
+		*char_str++ = new_c;
+	return (str);
+}
+
 char	*ft_strchr(const char *str, unsigned char c)
 {
 	while (*str != '\0')
@@ -123,7 +135,20 @@ char	*ft_strchr(const char *str, unsigned char c)
 	return (NULL);
 }
 
+char	*ft_strrchr(const char *str, unsigned char c)
+{
+	int	i;
 
+	i = ft_strlen(str);
+	str += i;
+	while (i-- >= 0)
+	{
+		if (*str == c)
+			return ((char *)str);
+		str --;
+	}
+	return (NULL);
+}
 
 char	*ft_read_line(int fd, char *buffer)
 {
@@ -136,8 +161,8 @@ char	*ft_read_line(int fd, char *buffer)
 	//Algo por aqui creo que puede estar bien pero hay que cambiar
 	if (ft_strchr(buffer, '\n') != NULL)
 	{
-		line = ft_strjoin(line, ft_strchr(buffer, '\n'));
-		
+		line = ft_strjoin(line, ft_strchr(buffer, '\n') + 1);
+		buffer = (ft_strrchr(buffer, '\n') + 1);
 	}
 	while (!ft_is_nl(line) && bites_read == BUFFER_SIZE)
 	{
@@ -154,9 +179,6 @@ char	*ft_read_line(int fd, char *buffer)
 	}
 	return (line);
 }
-
-
-
 
 char *proces_line(char *str)
 {
@@ -202,8 +224,8 @@ int main()
 		return (-1);
 	}
 	printf("\nEl tamaño del buffer que etsoy usando es de: %i\n", BUFFER_SIZE);
-	printf("Otra llamada:\n%s __FIN\n\n", get_next_line(fd));
-	printf("Otra llamada:\n%s __FIN\n\n", get_next_line(fd));
-	printf("Otra llamada:\n%s __FIN\n\n", get_next_line(fd));
-	printf("Otra llamada:\n%s __FIN\n\n", get_next_line(fd));
+	printf("Otra llamada:\n%s__FIN\n\n", get_next_line(fd));
+	printf("Otra llamada:\n%s__FIN\n\n", get_next_line(fd));
+	printf("Otra llamada:\n%s__FIN\n\n", get_next_line(fd));
+
 }
