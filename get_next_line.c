@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:58:15 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/12 11:20:41 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/12 12:45:37 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,18 +187,18 @@ char	*ft_read_line(int fd, char *buffer)
 		line = ft_strjoin(line, ft_strchr(buffer, '\n') + 1);
 		ft_memmove(buffer, line + 1, ft_strlen(line + 1) + 1);
 	}
-	while (!ft_is_nl(buffer) &&bites_read != 0)
+	while (!ft_is_nl(buffer) && bites_read == BUFFER_SIZE)
 	{
 		bites_read = read(fd, buffer, BUFFER_SIZE);
+		printf("\nQue hay en el bufer:%s\n", buffer);
 		if (bites_read == -1)
-			free(line);
+			return (NULL);
 		buffer[BUFFER_SIZE] = '\0';
 		temp = ft_strjoin(line, buffer);
 		free(line);
 		line = temp;
 	}
-	if (bites_read == 0)
-		return NULL;
+		printf("\nQue hay en el bufer:%zu\n", ft_strlen(buffer));
 	return (line);
 }
 
@@ -214,7 +214,7 @@ char *proces_line(char *str)
 		return ft_substr(str, 0, len + 1);
 	}
 	else
-		return (ft_substr(str, 0 , ft_strlen(str) + 1));
+		return (ft_substr(str, 0, ft_strlen(str) + 1));
 }
 
 char	*get_next_line(int fd)
@@ -236,32 +236,19 @@ char	*get_next_line(int fd)
 	return (new_line);
 }
 
-// int main()
-// {
-// 	int	fd;
+int main()
+{
+	int	fd;
 
-// 	fd = open("lorem.txt", O_RDONLY);
-// 	if (fd == -1)
-// 	{
-// 		printf("Error al leer el archivo");
-// 		return (-1);
-// 	}
-// 	printf("\nEl tamaño del buffer que etsoy usando es de: %i\n", BUFFER_SIZE);
-// 	printf("Otra llamada:\n%s__FIN\n\n", get_next_line(0));
-// 	printf("\n============================================\n");
-// 	// printf("Otra llamada:\n%s__FIN\n\n", get_next_line(fd));
-// 	// printf("\n============================================\n");
-// 	// printf("Otra llamada:\n%s__FIN\n\n", get_next_line(fd));
-// 	// printf("\n============================================\n");
-// 	// printf("Otra llamada:\n%s__FIN\n\n", get_next_line(fd));
-// 	// printf("\n============================================\n");
-// 	// printf("Otra llamada:\n%s__FIN\n\n", get_next_line(fd));
-// 	// printf("\n============================================\n");
-// 	// printf("Otra llamada:\n%s__FIN\n\n", get_next_line(fd));
-// 	// printf("\n============================================\n");
-// 	// printf("Otra llamada:\n%s__FIN\n\n", get_next_line(fd));
-// 	// printf("\n============================================\n");
-// 	// printf("Otra llamada:\n%s__FIN\n\n", get_next_line(fd));
-// 	// printf("\n============================================\n");
+	fd = open("lorem.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Error al leer el archivo");
+		return (-1);
+	}
+	printf("\nEl tamaño del buffer que etsoy usando es de: %i\n", BUFFER_SIZE);
+	printf("Otra llamada:\n%s__FIN\n\n", get_next_line(fd));
+	printf("\n============================================\n");
 
-// }
+
+}

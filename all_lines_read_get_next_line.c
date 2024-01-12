@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   all_lines_read_get_next_line.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 20:56:03 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/10 21:41:13 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/12 12:56:03 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,22 +269,8 @@ char	*ft_read_line(int fd, char *buffer)
 char	*get_next_line(int fd)
 {
 	char		buffer[BUFFER_SIZE + 1];
-	static char		*line;
 	static int line_count = -1;
-	char 	**output;
-
 	
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	if (line_count == -1)
-		line = ft_read_line(fd, buffer);
-	if (!line)
-		return (NULL);
-	line_count ++;
-	output = ft_split(line, '\n');
-	if (line_count > ft_count_line_list(output))
-		return (NULL);
-	return (output[line_count]);
 }
 
 // int main()
