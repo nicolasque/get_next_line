@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:58:15 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/12 11:07:46 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/12 11:20:41 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,11 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 			output[0] = '\0';
 			return (output);
 		}
-	output = malloc(len + 2 * sizeof(char));
+	output = malloc(len + 1 * sizeof(char));
 	if (output == NULL)
 		return (NULL);
 		
 	ft_strlcpy(output, s + start, len + 1);
-	output[len] = '\n';
-	output[len + 1] = '\0';
 	return (output);
 }
 
@@ -213,10 +211,10 @@ char *proces_line(char *str)
 	if (newline_pos != NULL)
 	{
 		len = newline_pos - str;
-		return ft_substr(str, 0, len);
+		return ft_substr(str, 0, len + 1);
 	}
 	else
-		return (ft_substr(str, 0 , ft_strlen(str)));
+		return (ft_substr(str, 0 , ft_strlen(str) + 1));
 }
 
 char	*get_next_line(int fd)
