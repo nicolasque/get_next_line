@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:58:15 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/16 12:04:24 by nico             ###   ########.fr       */
+/*   Updated: 2024/01/16 18:46:55 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (s == NULL)
 		return (NULL);
-		
 	if (len > (ft_strlen(s) - start))
 		len = ft_strlen(s) - start;
 		
@@ -182,10 +181,7 @@ char	*ft_strrchr(const char *str, unsigned char c)
 
 // 	line = ft_strdup("");
 // 	if (!line)
-// 	{
-// 		free(line);
 // 		return (NULL);
-// 	}
 // 	bites_read = BUFFER_SIZE;
 // 	if (ft_strchr(buffer, '\n') != 0)
 // 	{
@@ -274,7 +270,6 @@ char	*get_next_line(int fd)
 	line = ft_read_line(fd, buffer);
 	if (!line)
 	{	
-		free(line);
 		return (NULL);
 	}
 	new_line =  proces_line(line);
