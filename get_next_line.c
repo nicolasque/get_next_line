@@ -6,7 +6,7 @@
 /*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:58:15 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/16 01:47:18 by nico             ###   ########.fr       */
+/*   Updated: 2024/01/16 12:04:24 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,33 +174,79 @@ char	*ft_strrchr(const char *str, unsigned char c)
 	return (NULL);
 }
 
+// char	*ft_read_line(int fd, char *buffer)
+// {
+// 	char	*line;
+// 	char	*temp;
+// 	int		bites_read;
+
+// 	line = ft_strdup("");
+// 	if (!line)
+// 	{
+// 		free(line);
+// 		return (NULL);
+// 	}
+// 	bites_read = BUFFER_SIZE;
+// 	if (ft_strchr(buffer, '\n') != 0)
+// 	{
+// 		line = ft_strjoin(line, ft_strchr(buffer, '\n') + 1);
+// 		ft_memmove(buffer, line + 1, ft_strlen(line + 1) + 1);
+// 	}
+// 	while (!ft_is_nl(buffer) && bites_read == BUFFER_SIZE)
+// 	{
+// 		bites_read = read(fd, buffer, BUFFER_SIZE);
+// 		if (bites_read == -1 || bites_read == 0)
+// 			return (NULL);
+// 		buffer[bites_read] = '\0';
+// 		temp = ft_strjoin(line, buffer);
+// 		if (temp == NULL)
+// 		{
+// 			free(line);
+// 			return (NULL);
+// 		}
+// 		free(line);
+// 		line = temp;
+// 	}
+// 	return (line);
+// }
+
+
 char	*ft_read_line(int fd, char *buffer)
 {
-	char	*line;
-	char	*temp;
-	int		bites_read;
+    char	*line;
+    char	*temp;
+    int		bites_read;
+    char	*new_line_ptr;
 
-	line = ft_strdup("");
-	bites_read = BUFFER_SIZE;
-	if (ft_strchr(buffer, '\n') != NULL)
-	{
-		line = ft_strjoin(line, ft_strchr(buffer, '\n') + 1);
-		ft_memmove(buffer, line + 1, ft_strlen(line + 1) + 1);
-	}
-	while (!ft_is_nl(buffer) && bites_read == BUFFER_SIZE)
-	{
-		bites_read = read(fd, buffer, BUFFER_SIZE);
-		// printf("\nQue hay en el bufer:%s\n", buffer);
-		if (bites_read == -1)
-			return (NULL);
-		buffer[bites_read] = '\0';
-		temp = ft_strjoin(line, buffer);
-		free(line);
-		line = temp;
-	}
-		// printf("\nQue hay en el bufer:%zu\n", ft_strlen(buffer));
-	return (line);
+    line = ft_strdup("");
+    if (!line)
+        return (NULL);
+    bites_read = BUFFER_SIZE;
+    new_line_ptr = ft_strchr(buffer, '\n');
+    if (new_line_ptr != NULL)
+    {
+        line = ft_strjoin(line, new_line_ptr + 1);
+        ft_memmove(buffer, line + 1, ft_strlen(line + 1) + 1);
+    }
+    while (!ft_is_nl(buffer) && bites_read == BUFFER_SIZE)
+    {
+        bites_read = read(fd, buffer, BUFFER_SIZE);
+        if (bites_read == -1)
+            return (NULL);
+        buffer[bites_read] = '\0';
+        temp = ft_strjoin(line, buffer);
+        if (temp == NULL)
+        {
+            free(line);
+            return (NULL);
+        }
+        free(line);
+        line = temp;
+    }
+    return (line);
 }
+
+
 
 char *proces_line(char *str)
 {

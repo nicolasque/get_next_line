@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:59:24 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/12 12:35:47 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/16 12:00:01 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 8
+# define BUFFER_SIZE 41
 # endif // BUFFER_SIZE
 
 char	*get_next_line(int fd);
