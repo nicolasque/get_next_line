@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:58:15 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/12 12:45:37 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/16 01:47:18 by nico             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,15 +190,15 @@ char	*ft_read_line(int fd, char *buffer)
 	while (!ft_is_nl(buffer) && bites_read == BUFFER_SIZE)
 	{
 		bites_read = read(fd, buffer, BUFFER_SIZE);
-		printf("\nQue hay en el bufer:%s\n", buffer);
+		// printf("\nQue hay en el bufer:%s\n", buffer);
 		if (bites_read == -1)
 			return (NULL);
-		buffer[BUFFER_SIZE] = '\0';
+		buffer[bites_read] = '\0';
 		temp = ft_strjoin(line, buffer);
 		free(line);
 		line = temp;
 	}
-		printf("\nQue hay en el bufer:%zu\n", ft_strlen(buffer));
+		// printf("\nQue hay en el bufer:%zu\n", ft_strlen(buffer));
 	return (line);
 }
 
@@ -236,19 +236,19 @@ char	*get_next_line(int fd)
 	return (new_line);
 }
 
-int main()
-{
-	int	fd;
+// int main()
+// {
+// 	int	fd;
 
-	fd = open("lorem.txt", O_RDONLY);
-	if (fd == -1)
-	{
-		printf("Error al leer el archivo");
-		return (-1);
-	}
-	printf("\nEl tamaño del buffer que etsoy usando es de: %i\n", BUFFER_SIZE);
-	printf("Otra llamada:\n%s__FIN\n\n", get_next_line(fd));
-	printf("\n============================================\n");
+// 	fd = open("lorem.txt", O_RDONLY);
+// 	if (fd == -1)
+// 	{
+// 		printf("Error al leer el archivo");
+// 		return (-1);
+// 	}
+// 	printf("\nEl tamaño del buffer que etsoy usando es de: %i\n", BUFFER_SIZE);
+// 	printf("Otra llamada:\n%s__FIN\n\n", get_next_line(fd));
+// 	printf("\n============================================\n");
 
 
-}
+// }
