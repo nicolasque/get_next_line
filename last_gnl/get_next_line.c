@@ -6,30 +6,37 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 19:19:24 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/22 18:06:06 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/22 19:02:10 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// char	*ft_read_line(int fd, char *buffer, char *readed)
-// {
-// 	int	bites_read;
+char	*ft_read_line(int fd, char *buffer, char *readed)
+{
+	int	bites_read;
 
-	
-// 	return (readed);
-// }
+	bites_read = BUFFER_SIZE;
+	while (!ft_strchr(buffer,'\n') && bites_read != 0)
+	{
+		bites_read = read(fd, buffer, BUFFER_SIZE);
+		buffer[bites_read] = '\0';
+		readed = ft_strjoin(readed, buffer);
+	}
+
+	return (readed);
+}
 
 char	*get_next_line(int	fd)
 {
-	static char	*readed = "hola  mnod";
+	static char	*readed;
 	char		buffer[BUFFER_SIZE + 1];
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buffer, BUFFER_SIZE) < 0)
 		return (NULL);
-	
-	// readed = ft_read_line(fd, buffer, readed);
-	printf("%s", ft_strchr());
+	if (!ft_strchr(readed, '\n'))
+	readed = ft_read_line(fd, buffer, readed);
+	// printf("%s", ft_strchr(readed , '\n'));
 
 	return (NULL);
 }
