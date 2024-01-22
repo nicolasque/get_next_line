@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:59:27 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/22 14:25:23 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/22 15:58:09 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,26 +71,26 @@ char	*ft_strjoin(char *s1, char *s2)
 	ft_memcpy(exit, s1, s1_len);
 	ft_memcpy(&exit[s1_len], s2, s2_len);
 	exit[s1_len + s2_len] = '\0';
-	if (s1)
-		free(s1);
+	free(s1);
 	return (exit);
 }
 
-#include <stdio.h>
-#include <string.h>
+// #include <stdio.h>
+// #include <string.h>
 
-// Include your own header file here
-// #include "get_next_line.h"
+// // Include your own header file here
+// // #include "get_next_line.h"
 
-int main() {
-    char *str = "Hello, World!";
-    char ch = 'W';
-    char *result = ft_strchr(str, ch);
+// int main() {
+//     char *str = "Hello, World!";
+//     char ch = 'e';
+//     char *result = ft_strchr(str, ch);
 
-    if (result != NULL) {
-        printf("Found '%c' in \"%s\" at position: %ld\n", ch, str, result - str);
-    } else {
-        printf("Did not find '%c' in \"%s\"\n", ch, str);
-    }
-    return 0;
-}
+//     if (result != NULL) {
+//         printf("Found '%c' in \"%s\" at position: %ld\n", ch, str, result - str);
+// 		printf("%s", ft_strchr(str, ch));
+//     } else {
+//         printf("Did not find '%c' in \"%s\"\n", ch, str);
+//     }
+//     return 0;
+// }

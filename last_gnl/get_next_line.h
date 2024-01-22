@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:59:24 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/22 12:43:36 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/22 18:06:31 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlen(char *str);
 void	ft_memcpy(char *copy, char *origin, size_t len);
+char	*ft_strchr(char *str, char chr);
 
 char	*get_next_line(int fd);
 
