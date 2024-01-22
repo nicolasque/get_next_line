@@ -6,13 +6,13 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:58:15 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/22 12:11:52 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/22 12:48:59 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*ft_memmove(void *dest, const void *src, size_t count)
+void	*ft_memmove(void *dest, void *src, size_t count)
 {
 	unsigned char	*char_dest;
 	unsigned char	*char_src;
@@ -35,7 +35,7 @@ void	*ft_memmove(void *dest, const void *src, size_t count)
 	}
 	return (dest);
 }
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+size_t	ft_strlcpy(char *dest, char *src, size_t size)
 {
 	size_t	i;
 
@@ -51,7 +51,7 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	return (ft_strlen(src));
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
 	char	*output;
 
@@ -74,7 +74,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (output);
 }
 
-char	*ft_strdup(const char *str)
+char	*ft_strdup(char *str)
 {
 	char	*new_str;
 	int		i;
@@ -116,7 +116,7 @@ void	*ft_memset(void *str, int c, size_t n)
 	return (str);
 }
 
-char	*ft_strchr(const char *str, unsigned char c)
+char	*ft_strchr(char *str, unsigned char c)
 {
 	while (*str != '\0')
 	{
@@ -129,7 +129,7 @@ char	*ft_strchr(const char *str, unsigned char c)
 	return (NULL);
 }
 
-char	*ft_strrchr(const char *str, unsigned char c)
+char	*ft_strrchr(char *str, unsigned char c)
 {
 	int	i;
 

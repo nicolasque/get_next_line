@@ -6,13 +6,13 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:24:26 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/22 12:15:10 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/22 12:48:41 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(char *str)
 {
 	size_t	i;
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strjoin(char *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*exit;
 	int		i;
@@ -93,7 +93,7 @@ int	ft_countfrom_nl(char *str)
 	return (j);
 }
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+size_t	ft_strlcpy(char *dest,char *src, size_t size)
 {
 	size_t	i;
 
@@ -140,7 +140,7 @@ void	*ft_calloc(size_t nitems, size_t size)
 	return (exit);
 }
 
-static int	ft_count_splits(char const *s, char c)
+static int	ft_count_splits(char *s, char c)
 {
 	int	count;
 	int	bool_in_word;
@@ -164,7 +164,7 @@ static int	ft_count_splits(char const *s, char c)
 	return (count);
 }
 
-static int	ft_sub_len(char const *s, char c)
+static int	ft_sub_len(char *s, char c)
 {
 	int	i;
 
@@ -188,7 +188,7 @@ static char	**ft_free_mem(char **result, int i)
 	return (NULL);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char *s, char c)
 {
 	int		splits;
 	int		i;
