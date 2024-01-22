@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   old_get_next_line.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:24:26 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/10 18:54:04 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/22 12:15:10 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char const *s2)
 {
 	char	*exit;
 	int		i;
@@ -40,6 +40,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (*s2)
 		exit[i++] = *s2++;
 	exit[i] = '\0';
+	free(s1);
 	return (exit);
 }
 

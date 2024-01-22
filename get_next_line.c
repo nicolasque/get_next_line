@@ -6,12 +6,11 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:58:15 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/22 12:05:36 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/22 12:11:52 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
 
 void	*ft_memmove(void *dest, const void *src, size_t count)
 {
@@ -250,9 +249,9 @@ char	*get_next_line(int fd)
 	return (new_line);
 }
 
-// int main()
-// {
-// 	int	fd;
+int main()
+{
+	int	fd;
 
 	fd = open("lorem.txt", O_RDONLY);
 	if (fd == -1)
@@ -263,6 +262,5 @@ char	*get_next_line(int fd)
 	printf("\nEl tamaño del buffer que etsoy usando es de: %i\n", BUFFER_SIZE);
 	printf("Otra llamada:\n%s__FIN\n\n", get_next_line(fd));
 	printf("\n============================================\n");
-
 
 }

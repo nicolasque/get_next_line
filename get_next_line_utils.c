@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:59:27 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/12 21:20:54 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/22 12:15:35 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char const *s2)
 {
 	char	*exit;
 	int		i;
@@ -38,5 +38,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (*s2)
 		exit[i++] = *s2++;
 	exit[i] = '\0';
+	free(s1);
 	return (exit);
 }
