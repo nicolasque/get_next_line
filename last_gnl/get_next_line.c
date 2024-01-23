@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 19:19:24 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/23 13:08:02 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/23 13:20:54 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,14 @@ char	*get_next_line(int	fd)
 		return (NULL);
 	if (!ft_strchr(readed, '\n'))
 		readed = ft_read_line(fd, buffer, readed);
+	if (!readed)
+		return (NULL);
 	exit = ft_proces_line(readed);
 	if (ft_strchr(readed, '\n'))
 		ft_memcpy(readed, ft_strchr(readed, '\n') + 1, ft_strlen(ft_strchr(readed, '\n') + 1) + 1);
 	return (exit);
 }
+
 
 
 int main()
