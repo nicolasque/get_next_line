@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 19:19:24 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/23 12:30:54 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/23 13:08:02 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,17 @@ char	*ft_read_line(int fd, char *buffer, char *readed)
 	int	bites_read;
 
 	bites_read = read(fd, buffer, BUFFER_SIZE);
+	if (bites_read == 0)
+		return (NULL);
+	buffer[bites_read] = '\0';
 	while (bites_read > 0)
 	{
-		buffer[bites_read] = '\0';
 		readed = ft_strjoin(readed, buffer);
 		if (ft_strchr(readed , '\n'))
 			break ;
 		bites_read = read(fd, buffer, BUFFER_SIZE);
+		buffer[bites_read] = '\0';
 	}
-	if (bites_read == 0)
-		return (NULL);
 	return (readed);
 }
 
@@ -35,7 +36,10 @@ char	*ft_proces_line(char *readed)
 	char	*exit;
 	size_t 	line_size;
 
-	line_size = ft_strchr(readed, '\n') - readed;
+	if (ft_strchr(readed,'\n'))
+		line_size = ft_strchr(readed, '\n') - readed;
+	else
+		line_size = ft_strlen(readed);
 	exit = (char *)malloc(line_size + 2);
 	ft_memcpy(exit, readed, line_size + 1);
 	exit[line_size + 1] = '\0';
@@ -52,13 +56,9 @@ char	*get_next_line(int	fd)
 		return (NULL);
 	if (!ft_strchr(readed, '\n'))
 		readed = ft_read_line(fd, buffer, readed);
-	if (!readed)
-	{
-		free(readed);
-		return (NULL);
-	}
 	exit = ft_proces_line(readed);
-	ft_memcpy(readed, ft_strchr(readed, '\n') + 1, ft_strlen(ft_strchr(readed, '\n') + 1) + 1);
+	if (ft_strchr(readed, '\n'))
+		ft_memcpy(readed, ft_strchr(readed, '\n') + 1, ft_strlen(ft_strchr(readed, '\n') + 1) + 1);
 	return (exit);
 }
 
@@ -66,7 +66,7 @@ char	*get_next_line(int	fd)
 int main()
 {
 	int	fd;
-	fd = open("lorem.txt", O_RDONLY);
+	fd = open("lorem2.txt", O_RDONLY);
 	if (fd == -1)
 	{
 		printf("Error al leer el archivo");
