@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:59:27 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/22 20:18:54 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/23 12:06:51 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (exit == NULL)
 		return (NULL);
 	ft_memcpy(exit, s1, s1_len);
-	ft_memcpy(&exit[s1_len], s2, s2_len);
+	ft_memcpy((exit + s1_len), s2, s2_len);
 	exit[s1_len + s2_len] = '\0';
 	free(s1);
 	return (exit);

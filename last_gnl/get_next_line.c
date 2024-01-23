@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 19:19:24 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/22 21:10:24 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/23 12:30:54 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	*ft_read_line(int fd, char *buffer, char *readed)
 			break ;
 		bites_read = read(fd, buffer, BUFFER_SIZE);
 	}
+	if (bites_read == 0)
+		return (NULL);
 	return (readed);
 }
 
@@ -37,7 +39,6 @@ char	*ft_proces_line(char *readed)
 	exit = (char *)malloc(line_size + 2);
 	ft_memcpy(exit, readed, line_size + 1);
 	exit[line_size + 1] = '\0';
-	readed = ft_strchr(readed, '\n');
 	return (exit);
 }
 
@@ -51,8 +52,13 @@ char	*get_next_line(int	fd)
 		return (NULL);
 	if (!ft_strchr(readed, '\n'))
 		readed = ft_read_line(fd, buffer, readed);
+	if (!readed)
+	{
+		free(readed);
+		return (NULL);
+	}
 	exit = ft_proces_line(readed);
-	readed = ft_strchr(readed, '\n');
+	ft_memcpy(readed, ft_strchr(readed, '\n') + 1, ft_strlen(ft_strchr(readed, '\n') + 1) + 1);
 	return (exit);
 }
 
@@ -67,7 +73,18 @@ int main()
 		return (-1);
 	}
 	// get_next_line(fd);
+	// get_next_line(fd);
 	printf("\nEl tamaño del buffer que etsoy usando es de: %i\n", BUFFER_SIZE);
+	printf("llamada:\n%s__FIN\n\n", get_next_line(fd));
+	printf("\n============================================\n");
+	printf("llamada:\n%s__FIN\n\n", get_next_line(fd));
+	printf("\n============================================\n");
+	printf("llamada:\n%s__FIN\n\n", get_next_line(fd));
+	printf("\n============================================\n");
+	printf("llamada:\n%s__FIN\n\n", get_next_line(fd));
+	printf("\n============================================\n");
+	printf("llamada:\n%s__FIN\n\n", get_next_line(fd));
+	printf("\n============================================\n");
 	printf("llamada:\n%s__FIN\n\n", get_next_line(fd));
 	printf("\n============================================\n");
 	printf("llamada:\n%s__FIN\n\n", get_next_line(fd));

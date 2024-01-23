@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:59:24 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/22 18:06:31 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/23 12:36:25 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 41
+# define BUFFER_SIZE 42
 # endif // BUFFER_SIZE
 
 char	*ft_strjoin(char *s1, char *s2);
