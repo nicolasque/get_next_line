@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 19:19:24 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/24 18:02:50 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/24 20:37:39 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,25 +62,30 @@ char	*get_next_line(int	fd)
 	char		*line;
 	int			bites_read;
 	
-	bites_read = BUFFER_SIZE;
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buffer, 0) < 0)
+	bites_read = read(fd, buffer, BUFFER_SIZE);
+	if (fd < 0 || BUFFER_SIZE <= 0 || bites_read < 0)
 		return (NULL);
 	line = malloc(1);
 	line = ft_strjoin(line, buffer);
 	if (ft_strlen(line) != ft_strlen(buffer))
 		return (free(line), NULL);
+	// if (bites_read == 0 && !line)
+	// 	return ("hola");
 	while (1)
 	{
 		if (ft_strchr(buffer, '\n') || bites_read != BUFFER_SIZE)
 		{
 			if (ft_strchr(buffer, '\n'))
 				ft_memcpy(buffer, ft_strchr(buffer, '\n') + 1, ft_strlen(ft_strchr(buffer, '\n') + 1) + 1);
-			return(ft_proces_line(line));
+			else
+				bzero(buffer, BUFFER_SIZE); //FUNCION ILEGAL
+			break ;	
 		}
 		bites_read = read(fd, buffer, BUFFER_SIZE);
 		buffer[bites_read] = '\0';
 		line = ft_strjoin(line, buffer);
 	}
+	return(ft_proces_line(line));
 }
 
 // int main()

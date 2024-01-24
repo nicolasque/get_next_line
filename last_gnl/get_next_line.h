@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:59:24 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/23 19:43:04 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/24 18:55:32 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <strings.h>
 
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 1000
