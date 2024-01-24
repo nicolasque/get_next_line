@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 19:19:24 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/24 20:37:39 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/24 21:15:01 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ char	*get_next_line(int	fd)
 	line = ft_strjoin(line, buffer);
 	if (ft_strlen(line) != ft_strlen(buffer))
 		return (free(line), NULL);
-	// if (bites_read == 0 && !line)
-	// 	return ("hola");
 	while (1)
 	{
 		if (ft_strchr(buffer, '\n') || bites_read != BUFFER_SIZE)
