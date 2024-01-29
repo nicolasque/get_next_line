@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:59:27 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/24 19:10:54 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/26 04:09:51 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	free(s1);
 	return (exit);
 }
+
 
 // #include <stdio.h>
 // #include <string.h>
