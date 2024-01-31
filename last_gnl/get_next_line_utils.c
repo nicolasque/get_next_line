@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:59:27 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/26 04:09:51 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:56:16 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	ft_strlen(char *str)
 {
 	size_t	i;
 
+	if (!str || *str == '\0')
+		return (0);
 	i = 0;
 	while (str[i])
 		i++;
@@ -60,10 +62,8 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	if (!s2)
 		return (NULL);
-	if (!s1)
-		s1_len = 0;
-	else
-		s1_len = ft_strlen(s1);
+
+	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	exit = (char *)malloc(s1_len + s2_len + 1);
 	if (exit == NULL)

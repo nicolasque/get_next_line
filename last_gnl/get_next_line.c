@@ -6,15 +6,14 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:40:52 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/31 13:56:05 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:34:23 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_read_line(int fd)
+char	*ft_read_line(int fd, char *readed)
 {
-	char	*readed;
 	char	buffer[BUFFER_SIZE + 1];
 	int		bites_read;
 
@@ -24,11 +23,15 @@ char	*ft_read_line(int fd)
 	while (bites_read != 0)
 	{
 		bites_read = read(fd, buffer, BUFFER_SIZE);
+		if (readed == NULL && bites_read == 0)
+			return (NULL);
 		if (bites_read == -1)
 			return (free(readed), NULL);
 		buffer[bites_read] = '\0';
 		readed = ft_strjoin(readed, buffer);
 	}
+	if (ft_strlen(readed) == 0)
+		return (free(readed), NULL);
 	return (readed);
 }
 
@@ -54,7 +57,10 @@ char	*ft_prepare_readed(char *readed)
 	char	*new_readed;
 	int		new_size;
 
-	new_size = ft_strlen(readed) - (ft_strchr(readed, '\n') - readed) + 2;
+	if (ft_strchr(readed, '\n'))
+		new_size = ft_strlen(readed) - (ft_strchr(readed, '\n') - readed) + 2;
+	else
+		new_size = ft_strlen(readed);
 	new_readed = (char *)malloc(new_size + 1);
 	if (ft_strchr(readed, '\n'))
 		ft_memcpy(new_readed, ft_strchr(readed, '\n') + 1, new_size);
@@ -62,6 +68,8 @@ char	*ft_prepare_readed(char *readed)
 	if (!readed)
 		return (NULL);
 	free(readed);
+	if (ft_strlen(readed) == 0)
+		free(new_readed);
 	return (new_readed);
 }
 
@@ -73,13 +81,13 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, readed, 0) < 0)
 		return (NULL);
 	if (!readed)
-		readed = ft_read_line(fd);
+		readed = ft_read_line(fd, readed);
 	if (readed == NULL)
 		return (NULL);
-	if (ft_strlen(readed) == 0)
-		return (free(readed), NULL);
 	line = ft_get_line(readed);
 	readed = ft_prepare_readed(readed);
+	if (ft_strlen(readed) == 0 && line == NULL)
+		return ( NULL);
 	return (line);
 }
 
