@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:40:52 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/31 17:20:03 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/31 18:22:11 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,14 @@ char	*ft_prepare_readed(char *readed)
 		new_size = ft_strlen(readed) - (ft_strchr(readed, '\n') - readed) + 2;
 	else
 		new_size = ft_strlen(readed);
+	if (new_size == 0)
+		return (free(readed), NULL);
 	new_readed = (char *)malloc(new_size + 1);
 	if (ft_strchr(readed, '\n'))
 		ft_memcpy(new_readed, ft_strchr(readed, '\n') + 1, new_size);
+	else
+		ft_memcpy(new_readed, readed, new_size);
 	new_readed[new_size] = '\0';
-	if (!readed)
-		return (NULL);
 	free(readed);
 	return (new_readed);
 }
@@ -81,11 +83,11 @@ char	*get_next_line(int fd)
 	if (!readed)
 		readed = ft_read_line(fd, readed);
 	line = ft_get_line(readed);
-	if (ft_strlen(readed) > 0)
+	// if (ft_strlen(readed) > 0)
 		readed = ft_prepare_readed(readed);
-	if (ft_strlen(readed) == 0 && line == NULL)
+	if (line == NULL && ft_strlen(readed) == 0)
 		return (free(readed), NULL);
-	return (line);
+	return (line); 
 }
 
 
@@ -100,10 +102,9 @@ char	*get_next_line(int fd)
 // 		return (-1);
 // 	}
 
-// // 	printf("\nEl tamaño del buffer que etsoy usando es de: %i\n", BUFFER_SIZE);
+// 	printf("\nEl tamaño del buffer que etsoy usando es de: %i\n", BUFFER_SIZE);
 // 	int i = -1;
-// 	// while (i++ < 15)
-// 	// {
+
 // 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
 // 		printf("\n============================================\n");
 // 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
@@ -137,6 +138,5 @@ char	*get_next_line(int fd)
 // 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
 // 		printf("\n============================================\n");
 
-// 	// }
 // 	close(fd);
 //  }
