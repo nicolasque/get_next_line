@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:40:52 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/31 16:34:23 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/01/31 17:20:03 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*ft_get_line(char *readed)
 	if (ft_strchr(readed,  '\n'))
 		line_size = (ft_strchr(readed, '\n') - readed + 1); //Espacio para el /n y el /0
 	else
-		line_size = (ft_strlen(readed) );
+		line_size = (ft_strlen(readed));
 	if (line_size == 0)
 		return (NULL);
 	line = (char *)malloc(line_size * sizeof(char) + 1);
@@ -68,8 +68,6 @@ char	*ft_prepare_readed(char *readed)
 	if (!readed)
 		return (NULL);
 	free(readed);
-	if (ft_strlen(readed) == 0)
-		free(new_readed);
 	return (new_readed);
 }
 
@@ -82,14 +80,14 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!readed)
 		readed = ft_read_line(fd, readed);
-	if (readed == NULL)
-		return (NULL);
 	line = ft_get_line(readed);
-	readed = ft_prepare_readed(readed);
+	if (ft_strlen(readed) > 0)
+		readed = ft_prepare_readed(readed);
 	if (ft_strlen(readed) == 0 && line == NULL)
-		return ( NULL);
+		return (free(readed), NULL);
 	return (line);
 }
+
 
 
 // int main()
