@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/01 17:06:32 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/01 19:21:36 by nquecedo         ###   ########.fr       */
+/*   Created: 2024/02/01 19:31:33 by nquecedo          #+#    #+#             */
+/*   Updated: 2024/02/01 19:40:29 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_read_fd(char *buffer, char *line, int fd)
 {
@@ -55,22 +55,22 @@ char	*ft_prepare_line(char *line)
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[BUFFER_SIZE + 1];
+	static char	buffer[FD_OPEN][BUFFER_SIZE + 1];
 	char		*line;
 
 	line = malloc(1);
 	if (!line)
 		return (NULL);
 	*line = '\0';
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || FD_OPEN < fd)
 		return (free(line), NULL);
-	line = ft_read_fd(buffer, line, fd);
+	line = ft_read_fd(buffer[fd], line, fd);
 	if (line == NULL)
 		return (NULL);
 	line = ft_prepare_line(line);
-	if (ft_strchr(buffer, '\n'))
-		ft_memcpy(buffer, ft_strchr(buffer, '\n') + 1, \
-			ft_strlen(ft_strchr(buffer, '\n') + 1) + 1);
+	if (ft_strchr(buffer[fd], '\n'))
+		ft_memcpy(buffer[fd], ft_strchr(buffer[fd], '\n') + 1, \
+			ft_strlen(ft_strchr(buffer[fd], '\n') + 1) + 1);
 	return (line);
 }
 
