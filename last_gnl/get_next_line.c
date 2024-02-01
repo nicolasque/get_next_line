@@ -6,23 +6,11 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 17:06:32 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/01 18:28:18 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:59:45 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-void	*ft_memset(void *str, int c, size_t n)
-{
-	unsigned char	new_c;
-	unsigned char	*char_str;
-
-	char_str = (unsigned char *)str;
-	new_c = c;
-	while (n--)
-		*char_str++ = new_c;
-	return (str);
-}
 
 char	*ft_read_fd(char *buffer, char *line, int fd)
 {
@@ -36,7 +24,7 @@ char	*ft_read_fd(char *buffer, char *line, int fd)
 		bites_read = read(fd, buffer, BUFFER_SIZE);
 		if (bites_read < 0)
 		{
-			ft_memset(buffer, 0, BUFFER_SIZE);
+			buffer[0] = '\0';
 			return (free(line), NULL);
 		}
 		buffer[bites_read] = '\0';
@@ -45,7 +33,7 @@ char	*ft_read_fd(char *buffer, char *line, int fd)
 	return (line);
 }
 
-char *ft_prepare_line(char *line)
+char	*ft_prepare_line(char *line)
 {
 	char	*new_line;
 	int		new_size;
@@ -54,10 +42,8 @@ char *ft_prepare_line(char *line)
 		new_size = ft_strchr(line, '\n') - line + 1; // es para cojer el salto de linea
 	else
 		new_size = ft_strlen(line);
-	
 	if (new_size == 0)
 		return(free(line), NULL);
-	
 	new_line = (char *)malloc((sizeof(char) * new_size) + 1);
 	if (!new_line) //VERIFICAMOS QUE el malloc funcione
 		return (NULL);
@@ -74,8 +60,10 @@ char	*get_next_line(int fd)
 	char	*line;
 	
 	line = malloc(1);
+	if (!line)
+		return (NULL);
 	*line = '\0';
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buffer, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (free(line), NULL);
 	line = ft_read_fd(buffer, line, fd);
 	if (line == NULL)
@@ -83,7 +71,6 @@ char	*get_next_line(int fd)
 	line = ft_prepare_line(line);
 	if (ft_strchr(buffer, '\n'))
 			ft_memcpy(buffer, ft_strchr(buffer, '\n') + 1, ft_strlen(ft_strchr(buffer, '\n') + 1) + 1);
-
 	return (line);
 }
 
