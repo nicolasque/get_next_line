@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 20:59:27 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/31 15:56:16 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/01 19:21:24 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	if (!s2)
 		return (NULL);
-
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	exit = (char *)malloc(s1_len + s2_len + 1);
@@ -74,24 +73,3 @@ char	*ft_strjoin(char *s1, char *s2)
 	free(s1);
 	return (exit);
 }
-
-
-// #include <stdio.h>
-// #include <string.h>
-
-// // Include your own header file here
-// // #include "get_next_line.h"
-
-// int main() {
-//     char *str = "Hello, World!";
-//     char ch = 'e';
-//     char *result = ft_strchr(str, ch);
-
-//     if (result != NULL) {
-//         printf("Found '%c' in \"%s\" at position: %ld\n", ch, str, result - str);
-// 		printf("%s", ft_strchr(str, ch));
-//     } else {
-//         printf("Did not find '%c' in \"%s\"\n", ch, str);
-//     }
-//     return 0;
-// }

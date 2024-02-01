@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 17:06:32 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/01 18:59:45 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/01 19:21:36 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 char	*ft_read_fd(char *buffer, char *line, int fd)
 {
-	int bites_read;
+	int	bites_read;
 
 	bites_read = BUFFER_SIZE;
 	if (ft_strlen(buffer) > 0)
 		line = ft_strjoin(line, buffer);
-	while (!ft_strchr(buffer, '\n') && bites_read != 0 && !ft_strchr(line, '\n'))
+	while (!ft_strchr(buffer, '\n') && bites_read != 0)
 	{
 		bites_read = read(fd, buffer, BUFFER_SIZE);
 		if (bites_read < 0)
@@ -39,13 +39,13 @@ char	*ft_prepare_line(char *line)
 	int		new_size;
 
 	if (ft_strchr(line, '\n'))
-		new_size = ft_strchr(line, '\n') - line + 1; // es para cojer el salto de linea
+		new_size = ft_strchr(line, '\n') - line + 1;
 	else
 		new_size = ft_strlen(line);
 	if (new_size == 0)
-		return(free(line), NULL);
+		return (free(line), NULL);
 	new_line = (char *)malloc((sizeof(char) * new_size) + 1);
-	if (!new_line) //VERIFICAMOS QUE el malloc funcione
+	if (!new_line)
 		return (NULL);
 	ft_memcpy(new_line, line, new_size);
 	new_line[new_size] = '\0';
@@ -53,12 +53,11 @@ char	*ft_prepare_line(char *line)
 	return (new_line);
 }
 
-
 char	*get_next_line(int fd)
 {
 	static char	buffer[BUFFER_SIZE + 1];
-	char	*line;
-	
+	char		*line;
+
 	line = malloc(1);
 	if (!line)
 		return (NULL);
@@ -70,10 +69,10 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = ft_prepare_line(line);
 	if (ft_strchr(buffer, '\n'))
-			ft_memcpy(buffer, ft_strchr(buffer, '\n') + 1, ft_strlen(ft_strchr(buffer, '\n') + 1) + 1);
+		ft_memcpy(buffer, ft_strchr(buffer, '\n') + 1, \
+			ft_strlen(ft_strchr(buffer, '\n') + 1) + 1);
 	return (line);
 }
-
 
 // int main()
 // {
@@ -84,7 +83,6 @@ char	*get_next_line(int fd)
 // 		printf("Error al leer el archivo");
 // 		return (-1);
 // 	}
-
 // 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
 // 		printf("\n============================================\n");
 // 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
@@ -99,6 +97,5 @@ char	*get_next_line(int fd)
 // 		printf("\n============================================\n");
 // 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
 // 		printf("\n============================================\n");
-
 // 	close(fd);
 //  }
