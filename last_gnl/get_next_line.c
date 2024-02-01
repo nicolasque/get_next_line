@@ -5,138 +5,113 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/30 17:40:52 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/01/31 18:22:11 by nquecedo         ###   ########.fr       */
+/*   Created: 2024/02/01 17:06:32 by nquecedo          #+#    #+#             */
+/*   Updated: 2024/02/01 18:18:14 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_read_line(int fd, char *readed)
+void	*ft_memset(void *str, int c, size_t n)
 {
-	char	buffer[BUFFER_SIZE + 1];
-	int		bites_read;
+	unsigned char	new_c;
+	unsigned char	*char_str;
 
-	bites_read = BUFFER_SIZE;
-	readed = (char *)malloc(1);
-	readed[0] = '\0';
-	while (bites_read != 0)
-	{
-		bites_read = read(fd, buffer, BUFFER_SIZE);
-		if (readed == NULL && bites_read == 0)
-			return (NULL);
-		if (bites_read == -1)
-			return (free(readed), NULL);
-		buffer[bites_read] = '\0';
-		readed = ft_strjoin(readed, buffer);
-	}
-	if (ft_strlen(readed) == 0)
-		return (free(readed), NULL);
-	return (readed);
+	char_str = (unsigned char *)str;
+	new_c = c;
+	while (n--)
+		*char_str++ = new_c;
+	return (str);
 }
 
-char	*ft_get_line(char *readed)
+char	*ft_read_fd(char *buffer, char *line, int fd)
 {
-	char	*line;
-	int		line_size;
+	int bites_read;
 
-	if (ft_strchr(readed,  '\n'))
-		line_size = (ft_strchr(readed, '\n') - readed + 1); //Espacio para el /n y el /0
-	else
-		line_size = (ft_strlen(readed));
-	if (line_size == 0)
-		return (NULL);
-	line = (char *)malloc(line_size * sizeof(char) + 1);
-	ft_memcpy(line, readed, line_size + 1);
-	line[line_size] = '\0';
+	bites_read = BUFFER_SIZE;
+	if (ft_strlen(buffer) > 0)
+		line = ft_strjoin(line, buffer);
+	while (!ft_strchr(buffer, '\n') && bites_read != 0 && !ft_strchr(line, '\n'))
+	{
+		bites_read = read(fd, buffer, BUFFER_SIZE);
+		if (bites_read <= 0)
+		{
+			ft_memset(buffer, 0, BUFFER_SIZE);
+			return (free(line), NULL);
+		}
+		buffer[bites_read] = '\0';
+		line = ft_strjoin(line, buffer);
+	}
 	return (line);
 }
 
-char	*ft_prepare_readed(char *readed)
+char *ft_prepare_line(char *line)
 {
-	char	*new_readed;
+	char	*new_line;
 	int		new_size;
 
-	if (ft_strchr(readed, '\n'))
-		new_size = ft_strlen(readed) - (ft_strchr(readed, '\n') - readed) + 2;
+	if (ft_strchr(line, '\n'))
+		new_size = ft_strchr(line, '\n') - line + 1; // es para cojer el salto de linea
 	else
-		new_size = ft_strlen(readed);
+		new_size = ft_strlen(line);
+	
 	if (new_size == 0)
-		return (free(readed), NULL);
-	new_readed = (char *)malloc(new_size + 1);
-	if (ft_strchr(readed, '\n'))
-		ft_memcpy(new_readed, ft_strchr(readed, '\n') + 1, new_size);
-	else
-		ft_memcpy(new_readed, readed, new_size);
-	new_readed[new_size] = '\0';
-	free(readed);
-	return (new_readed);
+		return(free(line), NULL);
+	
+	new_line = (char *)malloc((sizeof(char) * new_size) + 1);
+	if (!new_line) //VERIFICAMOS QUE el malloc funcione
+		return (NULL);
+	ft_memcpy(new_line, line, new_size);
+	new_line[new_size] = '\0';
+	free(line);
+	return (new_line);
 }
+
 
 char	*get_next_line(int fd)
 {
-	static char	*readed = NULL;
+	static char	buffer[BUFFER_SIZE + 1];
 	char	*line;
-
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, readed, 0) < 0)
+	
+	line = malloc(1);
+	*line = '\0';
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buffer, 0) < 0)
+		return (free(line), NULL);
+	line = ft_read_fd(buffer, line, fd);
+	if (line == NULL)
 		return (NULL);
-	if (!readed)
-		readed = ft_read_line(fd, readed);
-	line = ft_get_line(readed);
-	// if (ft_strlen(readed) > 0)
-		readed = ft_prepare_readed(readed);
-	if (line == NULL && ft_strlen(readed) == 0)
-		return (free(readed), NULL);
-	return (line); 
+	line = ft_prepare_line(line);
+	if (ft_strchr(buffer, '\n'))
+			ft_memcpy(buffer, ft_strchr(buffer, '\n') + 1, ft_strlen(ft_strchr(buffer, '\n') + 1) + 1);
+
+	return (line);
 }
 
 
+int main()
+{
+	int	fd;
+	fd = open("lorem2.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Error al leer el archivo");
+		return (-1);
+	}
 
-// int main()
-// {
-// 	int	fd;
-// 	fd = open("lorem2.txt", O_RDONLY);
-// 	if (fd == -1)
-// 	{
-// 		printf("Error al leer el archivo");
-// 		return (-1);
-// 	}
+		printf("llamada: %s__FIN\n\n", get_next_line(fd));
+		printf("\n============================================\n");
+		printf("llamada: %s__FIN\n\n", get_next_line(fd));
+		printf("\n============================================\n");
+		printf("llamada: %s__FIN\n\n", get_next_line(fd));
+		printf("\n============================================\n");
+		printf("llamada: %s__FIN\n\n", get_next_line(fd));
+		printf("\n============================================\n");
+		printf("llamada: %s__FIN\n\n", get_next_line(fd));
+		printf("\n============================================\n");
+		printf("llamada: %s__FIN\n\n", get_next_line(fd));
+		printf("\n============================================\n");
+		printf("llamada: %s__FIN\n\n", get_next_line(fd));
+		printf("\n============================================\n");
 
-// 	printf("\nEl tamaño del buffer que etsoy usando es de: %i\n", BUFFER_SIZE);
-// 	int i = -1;
-
-// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-// 		printf("\n============================================\n");
-// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-// 		printf("\n============================================\n");
-// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-// 		printf("\n============================================\n");
-// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-// 		printf("\n============================================\n");
-// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-// 		printf("\n============================================\n");
-// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-// 		printf("\n============================================\n");
-// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-// 		printf("\n============================================\n");
-// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-// 		printf("\n============================================\n");
-// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-// 		printf("\n============================================\n");
-// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-// 		printf("\n============================================\n");
-// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-// 		printf("\n============================================\n");
-// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-// 		printf("\n============================================\n");
-// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-// 		printf("\n============================================\n");
-// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-// 		printf("\n============================================\n");
-// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-// 		printf("\n============================================\n");
-// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-// 		printf("\n============================================\n");
-
-// 	close(fd);
-//  }
+	close(fd);
+ }
