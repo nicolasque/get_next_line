@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 17:06:32 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/01 18:18:14 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:28:18 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_read_fd(char *buffer, char *line, int fd)
 	while (!ft_strchr(buffer, '\n') && bites_read != 0 && !ft_strchr(line, '\n'))
 	{
 		bites_read = read(fd, buffer, BUFFER_SIZE);
-		if (bites_read <= 0)
+		if (bites_read < 0)
 		{
 			ft_memset(buffer, 0, BUFFER_SIZE);
 			return (free(line), NULL);
@@ -88,30 +88,30 @@ char	*get_next_line(int fd)
 }
 
 
-int main()
-{
-	int	fd;
-	fd = open("lorem2.txt", O_RDONLY);
-	if (fd == -1)
-	{
-		printf("Error al leer el archivo");
-		return (-1);
-	}
+// int main()
+// {
+// 	int	fd;
+// 	fd = open("lorem2.txt", O_RDONLY);
+// 	if (fd == -1)
+// 	{
+// 		printf("Error al leer el archivo");
+// 		return (-1);
+// 	}
 
-		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-		printf("\n============================================\n");
-		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-		printf("\n============================================\n");
-		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-		printf("\n============================================\n");
-		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-		printf("\n============================================\n");
-		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-		printf("\n============================================\n");
-		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-		printf("\n============================================\n");
-		printf("llamada: %s__FIN\n\n", get_next_line(fd));
-		printf("\n============================================\n");
+// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
+// 		printf("\n============================================\n");
+// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
+// 		printf("\n============================================\n");
+// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
+// 		printf("\n============================================\n");
+// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
+// 		printf("\n============================================\n");
+// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
+// 		printf("\n============================================\n");
+// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
+// 		printf("\n============================================\n");
+// 		printf("llamada: %s__FIN\n\n", get_next_line(fd));
+// 		printf("\n============================================\n");
 
-	close(fd);
- }
+// 	close(fd);
+//  }
